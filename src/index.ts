@@ -16,9 +16,19 @@ enum BadgeTypesEnum {
 type BadgeSizeType = keyof typeof BadgeSize;
 type PrintType = keyof typeof Print;
 
+type Grade = {
+	workName: string,
+	mark: 100 | 0
+}
+
+type Visit = {
+	lesson: string,
+	present: boolean
+}
+
 
 class Student {
-	badgeTypeMap = new Map<string, typeof BadgeTypesEnum[keyof typeof BadgeTypesEnum]>([
+	badgeTypeMap = new Map<'single_fast' | 'single_standart' | 'double_fast' | 'double_standart', typeof BadgeTypesEnum[keyof typeof BadgeTypesEnum]>([
 		['single_fast', BadgeTypesEnum.COLOR],
 		['single_standart', BadgeTypesEnum.COLOR],
 		['double_fast', BadgeTypesEnum.MONO],
@@ -28,8 +38,8 @@ class Student {
 	_firstName: string;
 	_lastName: string;
 	_birthYear: number;
-	_grades: {workName: string, mark: 100 | 0}[] = []; // Опишите, как объект у которого есть поле workName и mark(оценка может быть выполненно или нет)
-	_visits: {lesson: string, present: boolean}[] = []; // Опишите, как объект у которого есть поле lesson (любое имя) и present
+	_grades: Grade[] = []; // Опишите, как объект у которого есть поле workName и mark(оценка может быть выполненно или нет)
+	_visits: Visit[] = []; // Опишите, как объект у которого есть поле lesson (любое имя) и present
 
 	get fullName(): string {
 		return `${this._lastName} ${this._firstName}`;
@@ -42,18 +52,18 @@ class Student {
 	get age(): number {
 		return new Date().getFullYear() - this._birthYear;
 	}
-
+	
 	constructor(firstName: string, lastName: string, birthYear: number) {
 		this._firstName = firstName;
 		this._lastName = lastName;
 		this._birthYear = birthYear;
 	}
 
-	setGrade(grade: {workName: string, mark: 100 | 0}) {
+	setGrade(grade: Grade) {
 		this._grades.push(grade);
 	}
 
-	setVisit(visit: {lesson: string, present: boolean}) {
+	setVisit(visit: Visit) {
 		this._visits.push(visit);
 	}
 
